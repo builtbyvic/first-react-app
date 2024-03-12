@@ -8,8 +8,16 @@ function App() {
 
   let sculpture = sculptureList[index];
 
-  function handleClick() {
-    setIndex(index + 1);
+  function handleNext() {
+    if (index < sculptureList.length - 1) {
+      setIndex(index + 1);
+    }
+  }
+
+  function handlePrevious() {
+    if (index > 0) {
+      setIndex(index - 1);
+    }
   }
 
   function handleShowDescription() {
@@ -32,10 +40,15 @@ function App() {
           {showDescription ? sculpture.description : ""}
         </p>
         <div>
-          {index} of {sculptureList.length}
+          {index + 1} of {sculptureList.length}
         </div>
         <button
-          onClick={handleClick}
+          onClick={handlePrevious}
+          className="bg-blue-500 rounded-sm self-center">
+          Previous
+        </button>
+        <button
+          onClick={handleNext}
           className="bg-blue-500 rounded-sm self-center">
           Next
         </button>
