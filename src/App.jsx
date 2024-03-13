@@ -1,60 +1,49 @@
-import "./App.css";
+// import "./App.css";
 import { useState } from "react";
-import { sculptureList } from "./data";
+
+let nextId = 0;
 
 function App() {
-  const [index, setIndex] = useState(0);
-  const [showDescription, setShowDescription] = useState(false);
+  const [name, setName] = useState("");
+  const [artists, setArtists] = useState([]);
 
-  let sculpture = sculptureList[index];
-
-  function handleNext() {
-    if (index < sculptureList.length - 1) {
-      setIndex(index + 1);
-    }
+  function handleChange(e) {
+    setName(e.target.value);
   }
 
-  function handlePrevious() {
-    if (index > 0) {
-      setIndex(index - 1);
-    }
-  }
-
-  function handleShowDescription() {
-    setShowDescription(!showDescription);
+  // let nextId = 0;
+  function handleClick() {
+    setArtists([{ name: name, id: nextId++ }, ...artists]);
   }
 
   return (
-    <div className="flex border border-white gap-4 pr-2">
-      <img src={sculpture.url} alt={sculpture.alt} />
-      <div className="flex flex-col gap-2">
-        <p className="text-4xl font-semibold italic">{`${sculpture.name} by ${sculpture.artist}`}</p>
+    <>
+      <div className="p-4">
+        <input
+          placeholder="Enter name..."
+          value={name}
+          className="border-zinc-700 border p-2 mr-4 rounded"
+          type="text"
+          onChange={handleChange}
+        />
         <button
-          onClick={handleShowDescription}
-          className="bg-blue-500 rounded-sm self-center">
-          {" "}
-          {showDescription ? "Hide " : "Show "}
-          Description
+          onClick={handleClick}
+          className="bg-green-600 text-white font-semibold rounded cursor-pointer hover:bg-green-500 p-2 transition-all ease-in">
+          Add Artist
         </button>
-        <p className="text-left">
-          {showDescription ? sculpture.description : ""}
-        </p>
-        <div>
-          {index + 1} of {sculptureList.length}
-        </div>
-        <button
-          onClick={handlePrevious}
-          className="bg-blue-500 rounded-sm self-center">
-          Previous
-        </button>
-        <button
-          onClick={handleNext}
-          className="bg-blue-500 rounded-sm self-center">
-          Next
-        </button>
+        <ul className="bg-blue-100 mt-2 rounded p-2">
+          {artists.map((artist) => (
+            <li key={artist.id}>{artist.name}</li>
+          ))}
+        </ul>
       </div>
-    </div>
+    </>
   );
 }
 
 export default App;
+
+// learning points / issues
+// positioning keys to avoid duplication
+// does whatever is in the array have to be an object? what guides this?
+// learnt - adding items at the beginning & end of an array using the spread syntax rather than the corresponding array methods (unshift & push) which mutate the original array
