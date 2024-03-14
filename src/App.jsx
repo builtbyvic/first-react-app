@@ -31,9 +31,18 @@ function App() {
           className="bg-green-600 text-white font-semibold rounded cursor-pointer hover:bg-green-500 p-2 transition-all ease-in">
           Add Artist
         </button>
-        <ul className="bg-blue-100 mt-2 rounded p-2">
+        <ul className="bg-blue-100 mt-2 rounded p-2 flex flex-col gap-2">
           {artists.map((artist) => (
-            <li key={artist.id}>{artist.name}</li>
+            <li key={artist.id}>
+              {artist.name}
+              <button
+                onClick={() => {
+                  setArtists(artists.filter((a) => a.id !== artist.id));
+                }}
+                className="bg-red-500 text-white font-semibold rounded cursor-pointer hover:bg-red-600 p-2 transition-all ease-in">
+                Delete
+              </button>
+            </li>
           ))}
         </ul>
       </div>
